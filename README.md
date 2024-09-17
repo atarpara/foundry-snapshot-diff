@@ -89,6 +89,13 @@ The github token allowing the action to upload and download gas reports generate
 
 _Defaults to: `${{ github.token }}`_
 
+
+### `include-new-contracts` _{bool}_
+
+Includes gas reports for new contracts in the generated report. This parameter allows you to control whether or not gas usage details for new contracts (contracts not present in the base snapshot) are included in the final report.
+
+_Defaults to: `false`_
+
 ### `include-fuzz-test` _{bool}_
 
 Determines whether to include fuzz test results in the gas report. The gas values will compare the average gas usage by each fuzz test.
@@ -97,11 +104,11 @@ Determines whether to include fuzz test results in the gas report. The gas value
 _Defaults to: `false`_
 
 
-### `fresh-shapshot` _{bool}_
+### `fresh-shapshots` _{bool}_
 
-Here's the corrected version:
 
-Specifies whether to generate a fresh `.gas-snapshot` or fetch an existing one. If set to 'true', a new gas snapshot will be generated using the 'forge snapshot' command. If set to 'false', the gas snapshot will be fetched directly from the PR branch. This reduces CI time if the PR already contains a `.gas-snapshot`.
+Specifies whether to generate a fresh `.gas-snapshot` or fetch an existing one. If set to 'true', a new gas snapshot will be generated using the `forge snapshot` command. If set to 'false', the gas snapshot will be fetched directly from branch. 
+
 _Defaults to: `false`_
 
 ## Acknowledgements
