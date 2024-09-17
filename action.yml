@@ -17,15 +17,15 @@ inputs:
     required: false
   include-new-contracts:
     description: Whether to include new tests in the report.
-    default: true
+    default: 'true'
     required: false
   include-fuzz-tests:
     description: Whether to include fuzz tests in the report.
-    default: false
+    default: 'false'
     required: false
-  fresh-shapshot: 
+  fresh-shapshots: 
     description: Generates a new snapshot if 'true', otherwise fetches the snapshot from the PR branch
-    default: true
+    default: 'true'
     required: false
 
 outputs:

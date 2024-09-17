@@ -7,9 +7,9 @@ async function run() {
     try {
         const baseBranch = core.getInput("base");
         const headBranch = core.getInput("head");
-        const freshSnapshot = core.getInput("fresh-shapshots");
-        const includeFuzzTests = core.getInput('include-fuzz-tests');
-        const includeNewContracts = core.getInput('include-new-contracts');
+        const freshSnapshot = core.getInput("fresh-shapshots")==='true';
+        const includeFuzzTests = core.getInput('include-fuzz-tests')==='true';
+        const includeNewContracts = core.getInput('include-new-contracts')==='true';
         const token = process.env.GITHUB_TOKEN || core.getInput("token");
         const octokit = getOctokit(token);
         const repo = context.repo.repo;
