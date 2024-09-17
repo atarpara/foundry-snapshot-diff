@@ -51,15 +51,15 @@ jobs:
         run: forge install
 
       - name: Generate gas diff
-        uses: atarpara/foundry-snapshot-diff@v0.3
+        uses: atarpara/foundry-snapshot-diff@v0.4
         with:
           # Optionally configure to run only for changes in specific files. For example:
           # token: ${{ secrets.GITHUB_TOKEN }}
           # base: main
           # head: ${{ github.head_ref }}
-          # include-fuzz-tests: 'true'
-          # fresh-snapshots: 'true'
-          # include-new-contracts: 'true'
+          # include-fuzz-tests: true
+          # fresh-snapshots: true
+          # include-new-contracts: true
         id : gas_diff
       
       - name: Add gas diff to sticky comment
