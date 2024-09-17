@@ -32435,22 +32435,23 @@ async function getDiffFileContent() {
     return output;
 }
 
-function generateReport(diffSnapshot, includeFuzzTests) {
+function generateReport(diffSnapshot, genCommit, comCommit, includeFuzzTests) {
     if (!diffSnapshot || diffSnapshot.trim() === "") return "";  // Return if diffSnapshot is blank
 
     let report = `
-    ### Gas Snapshot Comparison Report
-    > Generated at commit : 454548, Compared to commit :564486
+### Gas Snapshot Comparison Report
 
-    <table>
-        <tr>
-            <th>Contract Name</th>
-            <th>Test Name</th>
-            <th>Main Gas</th>
-            <th>PR Gas</th>
-            <th>Diff</th>
-        </tr>
-    `;
+> Generated at commit : ${genCommit}, Compared to commit : ${genCommit}
+
+<table>
+    <tr>
+        <th>Contract Name</th>
+        <th>Test Name</th>
+        <th>Main Gas</th>
+        <th>PR Gas</th>
+        <th>Diff</th>
+    </tr>`;
+    
 
     const mainTests = [];
     const prTests = [];
@@ -32502,22 +32503,26 @@ function generateReport(diffSnapshot, includeFuzzTests) {
 
         if (contractName !== lastContractName) {
             const rowSpan = [...uniqueTests].filter(t => t.split(':')[0] === contractName).length;
-            report += `    <tr><td rowspan="${rowSpan}">${contractName}</td>`;
+            report += `
+    <tr>
+        <td rowspan="${rowSpan}">${contractName}</td>`;
         } else {
-            report += '<tr>';
+            report += `
+    <tr>`;
         }
 
         report += `
-            <td>${simpleTestName}</td>
-            <td>${mainTest.gasValue}</td>
-            <td>${prTest.gasValue}</td>
-            <td>${diff}</td>
-        </tr>`;
+        <td>${simpleTestName}</td>
+        <td>${mainTest.gasValue}</td>
+        <td>${prTest.gasValue}</td>
+        <td>${diff}</td>
+    </tr>`;
 
         lastContractName = contractName;
     });
 
-    report += '\n   </table>';
+    report += `
+</table>`;
     return report;
 }
 
