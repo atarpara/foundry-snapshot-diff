@@ -32353,6 +32353,9 @@ async function run() {
         const repo = context.repo.repo;
         const owner = context.repo.owner;
 
+        const genCommit = context.payload.pull_request.head.sha;
+        const comCommit = context.payload.pull_request.base.sha;
+
         core.startGroup(`Starting the reading .gas-snapshot file from "${baseBranch}"`);
         // Fetch .gas-snapshot file from the base branch
         const baseSnapshot = await getGitFileContent(octokit, owner, repo, baseBranch, '.gas-snapshot');
@@ -32379,7 +32382,7 @@ async function run() {
 
         // Generate the report
         core.startGroup("Generating the report.")
-        const report = generateReport(diffSnapshot, includeFuzzTests);
+        const report = generateReport(diffSnapshot, genCommit, comCommit, includeFuzzTests);
         core.info(`Genrated Report :\n "${report}"`)
         core.setOutput("markdown", report);
 
@@ -32441,7 +32444,7 @@ function generateReport(diffSnapshot, genCommit, comCommit, includeFuzzTests) {
     let report = `
 ### Gas Snapshot Comparison Report
 
-> Generated at commit : ${genCommit}, Compared to commit : ${genCommit}
+> Generated at commit : ${genCommit}, Compared to commit : ${comCommit}
 
 <table>
     <tr>
