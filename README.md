@@ -42,6 +42,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       
+      - name: Fetch all branches
+        run: git fetch --all
+
       - name: Install Foundry
         uses: foundry-rs/foundry-toolchain@v1
         with:
