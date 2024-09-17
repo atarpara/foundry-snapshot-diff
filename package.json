@@ -1,6 +1,6 @@
 {
   "name": "foundry-snapshot-diff",
-  "version": "v0.2",
+  "version": "v0.3",
   "description": "Github Action reporting gas diff from .gas-snapshot",
   "main": "dist/index.js",
   "scripts": {
