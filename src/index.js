@@ -28,6 +28,7 @@ async function run() {
         core.startGroup(`Generating the .gas-snapshot file from "${headBranch}"`);
         // Generate .gas-snapshot file from the head branch
         const prSnapshot = await generateGasSnapshot();
+        core.info(`${prSnapshot}`)
         if (prSnapshot === null) {
             throw new Error(`prSnapshot is null`);
         }
@@ -68,18 +69,12 @@ async function getGitFileContent(octokit, owner, repo, ref, filePath) {
 }
 
 async function generateGasSnapshot() {
-    let output = '';
     const options = {
-        listeners: {
-            stdout: (data) => {
-                output += data.toString();
-            },
-        },
         ignoreReturnCode: true,
         silent: true
     };
     await exec.exec('forge', ['snapshot'] , options);
-    return output;
+    return fs.readFileSync('.gas-snapshot')   
 }
 
 async function getDiffFileContent() {
