@@ -1,0 +1,31 @@
+{
+  "name": "foundry-snapshot-diff",
+  "version": "0.0.1",
+  "description": "Github Action reporting gas diff from .gas-snapshot",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "package": "ncc build src/index.js -o dist"
+  },
+  "author": "Akshay Tarpara <akpatel0618@gmail.com> (atarpara)",
+  "license": "MIT",
+  "dependencies": {
+    "@actions/core": "^1.10.1",
+    "@actions/exec": "^1.1.1",
+    "@actions/github": "^6.0.0"
+  },
+  "devDependencies": {
+    "@vercel/ncc": "^0.38.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/atarpara/foundry-snapshot-diff.git"
+  },
+  "keywords": [
+    "foundry-snapshot-diff"
+  ],
+  "bugs": {
+    "url": "https://github.com/atarpara/foundry-snapshot-diff/issues"
+  },
+  "homepage": "https://github.com/atarpara/foundry-snapshot-diff#readme"
+}
