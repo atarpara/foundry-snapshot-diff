@@ -28,7 +28,6 @@ async function run() {
         core.startGroup(`Generating the .gas-snapshot file from "${headBranch}"`);
         // Generate .gas-snapshot file from the head branch
         const prSnapshot = await generateGasSnapshot();
-        core.info(`${prSnapshot}`)
         if (prSnapshot === null) {
             throw new Error(`prSnapshot is null`);
         }
