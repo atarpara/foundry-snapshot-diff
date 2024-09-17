@@ -32347,6 +32347,7 @@ async function run() {
     try {
         const baseBranch = core.getInput("base");
         const headBranch = core.getInput("head");
+        const freshSnapshot = core.getInput("fresh-shapshot");
         const includeFuzzTests = core.getInput('include-fuzz-tests') === 'true';
         const token = process.env.GITHUB_TOKEN || core.getInput("token");
         const octokit = getOctokit(token);
@@ -32367,10 +32368,18 @@ async function run() {
 
         core.startGroup(`Generating the .gas-snapshot file from "${headBranch}"`);
         // Generate .gas-snapshot file from the head branch
-        const prSnapshot = await generateGasSnapshot();
-        if (prSnapshot === null) {
+        const prSnapshot = ""
+
+        if (freshSnapshot) {
+            prSnapshot = await generateGasSnapshot();
+        } else {
+            prSnapshot = await getGitFileContent(octokit, owner, repo, baseBranch, '.gas-snapshot');
+        }
+
+        if (prSnapshot === "") {
             throw new Error(`prSnapshot is null`);
         }
+        
         fs.writeFileSync('.gas-snapshot.pr', prSnapshot);
         core.endGroup()
 

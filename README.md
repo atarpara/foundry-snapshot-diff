@@ -95,6 +95,12 @@ Determines whether to include fuzz test results in the gas report. The gas value
 _Defaults to: `false`_
 
 
+### `fresh-shapshot` _{bool}_
+
+Here's the corrected version:
+
+Specifies whether to generate a fresh `.gas-snapshot` or fetch an existing one. If set to 'true', a new gas snapshot will be generated using the 'forge snapshot' command. If set to 'false', the gas snapshot will be fetched directly from the PR branch. This reduces CI time if the PR already contains a `.gas-snapshot`.
+_Defaults to: `false`_
 
 ## Acknowledgements
 
