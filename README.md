@@ -38,6 +38,7 @@ on:
 jobs:
   gas-diff:
     runs-on: ubuntu-latest
+    permissions: write-all
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
