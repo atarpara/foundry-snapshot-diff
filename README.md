@@ -55,7 +55,7 @@ jobs:
         run: forge install
 
       - name: Generate gas diff
-        uses: atarpara/foundry-snapshot-diff@v0.4
+        uses: atarpara/foundry-snapshot-diff@v0.5
         with:
           # Optionally configure to run only for changes in specific files. For example:
           # token: ${{ secrets.GITHUB_TOKEN }}
