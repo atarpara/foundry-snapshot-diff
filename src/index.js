@@ -173,6 +173,9 @@ function generateReport(diffSnapshot, genCommit, comCommit, includeFuzzTests, in
             };
         }).filter(entry => 
             (includeNewContracts || entry.diff !== '-') &&  entry.diff !== 0); // Include new contracts or existing ones with valid gas values
+            
+        // sort testData for correct rowSpan in report
+        testData.sort((a, b) => a.contractName.localeCompare(b.contractName));
 
         let report = `
 ### Gas Snapshot Comparison Report
@@ -191,7 +194,7 @@ function generateReport(diffSnapshot, genCommit, comCommit, includeFuzzTests, in
     let lastContractName = '';
 
     // Process each test entry to generate report rows
-    testData.forEach((entry, index) => {
+    testData.forEach(entry => {
         if (entry.contractName !== lastContractName) {
             // Calculate rowSpan for the current contract
             const rowSpan = testData.filter(t => t.contractName === entry.contractName).length;
