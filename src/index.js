@@ -5,8 +5,6 @@ const fs = require('fs');
 
 async function run() {
     try {
-        const baseBranch = core.getInput("base");
-        const headBranch = core.getInput("head");
         const freshSnapshot = core.getInput("fresh-shapshots")==='true';
         const includeFuzzTests = core.getInput('include-fuzz-tests')==='true';
         const includeNewContracts = core.getInput('include-new-contracts')==='true';
@@ -18,13 +16,19 @@ async function run() {
         const genCommit = context.payload.pull_request.head.sha;
         const comCommit = context.payload.pull_request.base.sha;
 
+        const headRepoFullName = context.payload.pull_request.head.repo.full_name;
+        const headBranch = context.payload.pull_request.head.ref;
+
+        const baseRepoFullName = context.payload.pull_request.base.repo.full_name;
+        const baseBranch = context.payload.pull_request.base.ref;
+
         if (freshSnapshot) {
             core.startGroup(`Generating the .gas-snapshot file from "${headBranch}"`);
-            await generateGasSnapshot(headBranch, ".gas-snapshot.pr");
+            await generateGasSnapshot(headRepoFullName, headBranch, ".gas-snapshot.pr");
             core.endGroup()
 
             core.startGroup(`Generating the .gas-snapshot file from "${baseBranch}"`);
-            await generateGasSnapshot(baseBranch, ".gas-snapshot.base");
+            await generateGasSnapshot(baseRepoFullName, baseBranch, ".gas-snapshot.base");
             core.endGroup()
 
         } else {
@@ -80,8 +84,10 @@ async function getGitFileContent(octokit, owner, repo, ref, filePath) {
     }
 }
 
-async function generateGasSnapshot(refBranch, fileName) {
-    await exec.exec('git', ['checkout', refBranch])
+async function generateGasSnapshot(repoFullName, branchName, fileName) {
+    await exec.exec('git', ['fetch', `https://github.com/${repoFullName}`, `${branchName}`]);
+    await exec.exec('git', ['checkout', '-b', branchName, `FETCH_HEAD`]);
+
     const options = {
         ignoreReturnCode: true,
         silent: true
