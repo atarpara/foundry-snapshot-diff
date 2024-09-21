@@ -43,9 +43,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       
-      - name: Fetch all branches
-        run: git fetch --all
-
       - name: Install Foundry
         uses: foundry-rs/foundry-toolchain@v1
         with:
@@ -55,7 +52,7 @@ jobs:
         run: forge install
 
       - name: Generate gas diff
-        uses: atarpara/foundry-snapshot-diff@v0.6
+        uses: atarpara/foundry-snapshot-diff@v0.7
         with:
           # Optionally configure to run only for changes in specific files. For example:
           # token: ${{ secrets.GITHUB_TOKEN }}
@@ -102,7 +99,7 @@ Includes gas reports for new contracts in the generated report. This parameter a
 
 _Defaults to: `false`_
 
-### `include-fuzz-test` _{bool}_
+### `include-fuzz-tests` _{bool}_
 
 Determines whether to include fuzz test results in the gas report. The gas values will compare the average gas usage by each fuzz test.
 
